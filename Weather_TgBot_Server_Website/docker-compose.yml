@@ -1,0 +1,53 @@
+---
+version: '3.3'
+
+services:
+  weather_tgbot:
+    image: weather-tg_bot:latest
+    build:
+      context: Weather_botTg/.
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    env_file:
+      ./.env
+    container_name: wearther-tg_bot
+    environment:
+      TELEGRAM_WEATHER_BOT_TOKEN: ${TELEGRAM_WEATHER_BOT_TOKEN}
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      WEATHER_MQTT_USERNAME: ${WEATHER_MQTT_USERNAME}
+      WEATHER_MQTT_PASSWORD: ${WEATHER_MQTT_PASSWORD}
+ 
+  weather_server:
+    image: weather-server:latest
+    build:
+      context: Weather_server/.
+      dockerfile: Dockerfile
+    container_name: wearther-server
+    depends_on:
+      - weather_tgbot
+    restart: unless-stopped
+    env_file:
+      ./.env
+    environment:
+      TTN_ACCESS_KEY: ${TTN_ACCESS_KEY}
+      WEATHER_MQTT_USERNAME: ${WEATHER_MQTT_USERNAME}
+      WEATHER_MQTT_PASSWORD: ${WEATHER_MQTT_PASSWORD}
+  
+  weather_website:
+    image: weather-website:latest
+    build:
+      context: Weather_website/.
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    container_name: wearther-website
+    depends_on:
+      - weather_server
+    ports:
+      - 80:80
+    expose:
+      - 80
+    env_file:
+      ./.env 
+    environment:
+      WEATHER_MQTT_USERNAME: ${WEATHER_MQTT_USERNAME}
+      WEATHER_MQTT_PASSWORD: ${WEATHER_MQTT_PASSWORD}
