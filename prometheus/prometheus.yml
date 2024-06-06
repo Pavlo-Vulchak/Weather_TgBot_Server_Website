@@ -31,7 +31,7 @@ scrape_configs:
 
   - job_name: 'cadvisor'
     static_configs:
-      - targets: ['cadvisor:8080']
+      - targets: ['cadvisor:8090']
       
   - job_name: 'jenkins'
     metrics_path: '/prometheus'
