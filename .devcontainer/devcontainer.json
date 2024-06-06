@@ -1,0 +1,18 @@
+{
+    "image": "mcr.microsoft.com/devcontainers/universal:2",
+    "hostRequirements": {
+        "cpus": 2
+    },
+    "waitFor": "onCreateCommand",
+    "postCreateCommand": "",
+	"forwardPorts": [80],
+    "portsAttributes": {
+        "80": {
+            "label": "Weather_website"
+        }
+    },
+	"postAttachCommand": {
+        "server1": "gh codespace ports visibility 80:public -c $CODESPACE_NAME\ndocker-compose up --build",
+        "server2": "docker ps\ngh codespace ports -c $CODESPACE_NAME"
+    }
+}
