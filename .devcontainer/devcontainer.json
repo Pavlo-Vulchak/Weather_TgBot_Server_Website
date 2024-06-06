@@ -13,6 +13,6 @@
     },
 	"postAttachCommand": {
         "server1": "gh codespace ports visibility 80:public -c $CODESPACE_NAME\ndocker-compose up --build",
-        "server2": "docker ps\ngh codespace ports -c $CODESPACE_NAME"
+        "server2": "gh codespace ports -c $CODESPACE_NAME"
     }
 }
