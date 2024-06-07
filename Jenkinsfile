@@ -84,7 +84,7 @@ pipeline {
         stage('Deploy Weather services') {
             steps {
 				dir("Weather_TgBot_Server_Website"){
-					sh "docker-compose down"
+					sh "docker-compose down -v"
                 	sh "docker container prune --force"
                 	sh "docker image prune --force"
                 	sh "docker-compose up -d --build"
