@@ -12,7 +12,7 @@
         }
     },
 	"postAttachCommand": {
-        "server1": "gh codespace ports visibility 80:public -c $CODESPACE_NAME\ndocker-compose down\nsleep 10s\ndocker-compose up --build",
+        "server1": "gh codespace ports visibility 80:public -c $CODESPACE_NAME\ndocker-compose down -v\nsleep 10s\ndocker-compose up --build",
         "server2": "gh codespace ports -c $CODESPACE_NAME"
     }
 }
